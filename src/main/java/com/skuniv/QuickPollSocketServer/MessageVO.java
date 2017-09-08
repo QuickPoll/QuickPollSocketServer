@@ -5,7 +5,14 @@ import com.google.gson.Gson;
 public class MessageVO {
 	private String course_id;
 	private String message;
-	private String type;
+	/******* message type ********/
+	private String type; 
+	/*
+	 "connect" : "enter to student"
+	 "create" : "create to room from professor"
+	 
+	 */
+	/*****************************/
 	private String id;
 	
 	public String getCourse_id() {

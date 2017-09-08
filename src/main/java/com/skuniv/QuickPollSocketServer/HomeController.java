@@ -21,14 +21,18 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/chat", method = RequestMethod.GET)
-	public ModelAndView home(HttpServletRequest request) {
+	public ModelAndView chat(HttpServletRequest request) {
 		
 		ModelAndView mv = new ModelAndView("chat");
 		String id = request.getParameter("id");
-		System.out.println("id : " + id);
 		mv.addObject("userInfo", id);
 		
 		return mv;
 	}
-
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView main(HttpServletRequest request) {
+		
+		ModelAndView mv = new ModelAndView("home");
+		return mv;
+	}
 }
