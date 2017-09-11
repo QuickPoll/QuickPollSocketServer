@@ -49,6 +49,8 @@ public class EchoHandler extends TextWebSocketHandler {
     	} else if (messageVO.getType().equals("connect")) {
     		socketService.enterLecture(session, message, messageVO);
     		System.out.println("connect");
+    	} else if (messageVO.getType().equals("sendDirectQuestion")) {
+    		
     	}
 		for (int i = 0 ; i < list.get(messageVO.getCourse_id()).size(); i++)
 			System.out.println("id : " + list.get(messageVO.getCourse_id()).get(i).get("id"));
