@@ -93,8 +93,8 @@
             	message={};
                 message.coure_id = "cs";
                 message.type = "connect";
-                message.id = $("#id").val();
-                message.name = "lee";
+                message.id = "2011301051";
+                message.name = "이규영";
                 sock.send(JSON.stringify(message));
 
             };
