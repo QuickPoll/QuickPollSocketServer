@@ -1,10 +1,6 @@
 package com.skuniv.QuickPollSocketServer;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,6 +10,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.skuniv.QuickPollSocketServer.Professor.ProfessorSocketService;
 import com.skuniv.QuickPollSocketServer.Student.StudentSocketService;
 
@@ -22,11 +20,11 @@ public class EchoHandler extends TextWebSocketHandler {
 	private ProfessorSocketService professorSocketService;
 	@Resource(name = "StudentSocketService")
 	private StudentSocketService studentSocketService;
-	// À¥¼ÒÄÏ ¼­¹öÃø¿¡ ÅØ½ºÆ® ¸Þ½ÃÁö°¡ Á¢¼öµÇ¸é È£ÃâµÇ´Â ¸Þ¼Òµå
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Þ¼Òµï¿½
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	 /**
 	
-     * Å¬¶óÀÌ¾ðÆ® ¿¬°á ÀÌÈÄ¿¡ ½ÇÇàµÇ´Â ¸Þ¼Òµå
+     * Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Þ¼Òµï¿½
 
      */
 
@@ -37,14 +35,14 @@ public class EchoHandler extends TextWebSocketHandler {
             throws Exception {
     	
 //        sessionList.add(session);
-//        System.out.println("{} ¿¬°áµÊ " + session.getId() );
+//        System.out.println("{} ï¿½ï¿½ï¿½ï¿½ï¿½ " + session.getId() );
 
 
     }
 
     /**
 
-     * Å¬¶óÀÌ¾ðÆ®°¡ À¥¼ÒÄÏ¼­¹ö·Î ¸Þ½ÃÁö¸¦ Àü¼ÛÇßÀ» ¶§ ½ÇÇàµÇ´Â ¸Þ¼Òµå
+     * Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Þ¼Òµï¿½
 
      */
 
@@ -57,14 +55,16 @@ public class EchoHandler extends TextWebSocketHandler {
     		System.out.println("create");
     	} else if (messageVO.getType().equals("connect")) {
     		studentSocketService.enterLecture(session, message, messageVO);
-    		WebSocketSession sess = professorSocketService.sendConnectStudent(messageVO.getCourse_id()); 
-//    		sess.sendMessage(messageVO);
+    		WebSocketSession sess = professorSocketService.sendConnectStudent(messageVO.getCourse_id());
+    		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+    		final String json = gson.toJson(messageVO);
+    		sess.sendMessage(new TextMessage(json));
     		System.out.println("connect");
     	} else if (messageVO.getType().equals("sendDirectQuestion")) {
     		
     	}
     	professorSocketService.printMemberList(messageVO);
-//    	System.out.println("{}·Î ºÎÅÍ {} ¹ÞÀ½" + session.getId() + ", "+ message.getPayload());
+//    	System.out.println("{}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ {} ï¿½ï¿½ï¿½ï¿½" + session.getId() + ", "+ message.getPayload());
 //
 //        for(WebSocketSession sess : sessionList){
 //
@@ -77,7 +77,7 @@ public class EchoHandler extends TextWebSocketHandler {
 
     /**
 
-     * Å¬¶óÀÌ¾ðÆ®°¡ ¿¬°áÀ» ²÷¾úÀ» ¶§ ½ÇÇàµÇ´Â ¸Þ¼Òµå
+     * Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Þ¼Òµï¿½
 
      */
 
@@ -86,7 +86,7 @@ public class EchoHandler extends TextWebSocketHandler {
 
     public void afterConnectionClosed(WebSocketSession session,
             CloseStatus status) throws Exception {
-    	System.out.println("{} ¿¬°á ²÷±è" + session.getId());
+    	System.out.println("{} ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½" + session.getId());
 
 //        sessionList.remove(session);
 //    	Collection<LinkedList<HashMap<String, Object>>> collection = list.values();    	
