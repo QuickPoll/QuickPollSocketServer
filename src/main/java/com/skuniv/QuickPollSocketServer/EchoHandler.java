@@ -1,6 +1,11 @@
 package com.skuniv.QuickPollSocketServer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -9,11 +14,15 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.skuniv.QuickPollSocketServer.Professor.ProfessorSocketService;
+import com.skuniv.QuickPollSocketServer.Student.StudentSocketService;
+
 public class EchoHandler extends TextWebSocketHandler {
-	@Resource(name = "SocketService")
-	private SocketService socketService;
+	@Resource(name = "ProfessorSocketService")
+	private ProfessorSocketService professorSocketService;
+	@Resource(name = "StudentSocketService")
+	private StudentSocketService studentSocketService;
 	// 웹소켓 서버측에 텍스트 메시지가 접수되면 호출되는 메소드
-	private Map<String, LinkedList<HashMap<String, Object>>> list = new LectureModel().getIntstance().getList();
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	 /**
 	
@@ -44,17 +53,17 @@ public class EchoHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
     	MessageVO messageVO = MessageVO.converMessage(message.getPayload());
     	if (messageVO.getType().equals("create")) {
-    		socketService.createLecture(session, message, messageVO);
+    		professorSocketService.createLecture(session, message, messageVO);
     		System.out.println("create");
     	} else if (messageVO.getType().equals("connect")) {
-    		socketService.enterLecture(session, message, messageVO);
+    		studentSocketService.enterLecture(session, message, messageVO);
+    		WebSocketSession sess = professorSocketService.sendConnectStudent(messageVO.getCourse_id()); 
+//    		sess.sendMessage(messageVO);
     		System.out.println("connect");
     	} else if (messageVO.getType().equals("sendDirectQuestion")) {
     		
     	}
-		for (int i = 0 ; i < list.get(messageVO.getCourse_id()).size(); i++)
-			System.out.println("id : " + list.get(messageVO.getCourse_id()).get(i).get("id"));
-    	
+    	professorSocketService.printMemberList(messageVO);
 //    	System.out.println("{}로 부터 {} 받음" + session.getId() + ", "+ message.getPayload());
 //
 //        for(WebSocketSession sess : sessionList){
@@ -80,18 +89,18 @@ public class EchoHandler extends TextWebSocketHandler {
     	System.out.println("{} 연결 끊김" + session.getId());
 
 //        sessionList.remove(session);
-    	Collection<LinkedList<HashMap<String, Object>>> collection = list.values();    	
-    	Iterator<LinkedList<HashMap<String, Object>>> iterator = collection.iterator();
-    	while (iterator.hasNext()) {
-    		LinkedList<HashMap<String, Object>> memberList = iterator.next();
-    		for (int i = 0 ; i < memberList.size(); i++) {
-    			if (memberList.get(i).get("session").equals(session)) {
-    				System.out.println("end");
-    				memberList.remove(i);
-    				return;
-    			} 
-    		}
-    	}
+//    	Collection<LinkedList<HashMap<String, Object>>> collection = list.values();    	
+//    	Iterator<LinkedList<HashMap<String, Object>>> iterator = collection.iterator();
+//    	while (iterator.hasNext()) {
+//    		LinkedList<HashMap<String, Object>> memberList = iterator.next();
+//    		for (int i = 0 ; i < memberList.size(); i++) {
+//    			if (memberList.get(i).get("session").equals(session)) {
+//    				System.out.println("end");
+//    				memberList.remove(i);
+//    				return;
+//    			} 
+//    		}
+//    	}
         
     }
 

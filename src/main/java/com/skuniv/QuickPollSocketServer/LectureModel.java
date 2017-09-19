@@ -1,12 +1,13 @@
 package com.skuniv.QuickPollSocketServer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.web.socket.WebSocketSession;
+
 public class LectureModel {
-	private Map<String, LinkedList<HashMap<String, Object>>> list = new HashMap<String, LinkedList<HashMap<String, Object>>>();
+	private Map<String, LinkedHashMap<WebSocketSession, LectureMember>> memberList = new HashMap<String, LinkedHashMap<WebSocketSession, LectureMember>>();
 	private static LectureModel lectureModel = null;
 	public static LectureModel getIntstance() {
 		if (lectureModel == null) {
@@ -14,8 +15,12 @@ public class LectureModel {
 		}
 		return lectureModel;
 	}
-	public Map<String, LinkedList<HashMap<String, Object>>> getList() {
-		return list;
+	
+	public Map<String, LinkedHashMap<WebSocketSession, LectureMember>> getMemberList() {
+		return memberList;
+	}
+	public LinkedHashMap<WebSocketSession, LectureMember> getLectureMap(MessageVO messageVO) {
+		return memberList.get(messageVO.getCourse_id());
 	}
 	
 }

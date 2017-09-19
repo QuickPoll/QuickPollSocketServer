@@ -7,6 +7,15 @@ public class MessageVO {
 	private String message;
 	private int question_type; // 1->direct(subjective) 2-> objective 3->OX
 	private String question_content;
+	private String name;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public int getQuestion_type() {
 		return question_type;
 	}
@@ -33,7 +42,7 @@ public class MessageVO {
 	 
 	 */
 	/*****************************/
-	private String id;
+	private int id;
 	
 	public String getCourse_id() {
 		return course_id;
@@ -43,11 +52,11 @@ public class MessageVO {
 		this.course_id = course_id;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
