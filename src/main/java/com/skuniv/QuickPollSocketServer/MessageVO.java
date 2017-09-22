@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 public class MessageVO {
 	private String course_id;
 	private String message;
-	private int question_type; // 1->direct(subjective) 2-> objective 3->OX
+	private int question_type; // 1->direct(subjective) 2-> objective 3->subjective
 	private String question_content;
 	private String name;
 	public String getName() {
