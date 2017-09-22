@@ -40,22 +40,26 @@ public class EchoHandler extends TextWebSocketHandler {
     @Override
 
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    	
     	MessageVO messageVO = MessageVO.converMessage(message.getPayload());
-    	if (messageVO.getType().equals("create")) {
+    	String type = messageVO.getType();
+    	if (type.equals("create")) {
     		professorSocketService.createLecture(session, message, messageVO);
     		System.out.println("create");
-    	} else if (messageVO.getType().equals("connect")) {
+    	} else if (type.equals("connect")) {
     		studentSocketService.enterLecture(session, message, messageVO);
     		WebSocketSession sess = professorSocketService.sendConnectStudent(messageVO.getCourse_id());
     		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
     		final String json = gson.toJson(messageVO);
     		sess.sendMessage(new TextMessage(json));
     		System.out.println("connect");
-    	} else if (messageVO.getType().equals("sendDirectQuestion")) {
+    	} else if (type.equals("sendDirectQuestion")) {
     		// insert db 
-    		
+    		System.out.println("directQuestion");
     		// sendall to student
-    		
+    		professorSocketService.sendAllDirectQuestionToStudent(messageVO);
+    	} else if (type.equals("directQuestionAnswer")) {
+    		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);
     	}
     	professorSocketService.printMemberList(messageVO);
 //    	System.out.println("{}�� ���� {} ����" + session.getId() + ", "+ message.getPayload());

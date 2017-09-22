@@ -8,6 +8,15 @@ public class MessageVO {
 	private int question_type; // 1->direct(subjective) 2-> objective 3->subjective
 	private String question_content;
 	private String name;
+	private String question_anwser;
+	public String getQuestionAnwser() {
+		return question_anwser;
+	}
+
+	public void setQuestionAnwser(String question_anwser) {
+		this.question_anwser = question_anwser;
+	}
+
 	public String getName() {
 		return name;
 	}
