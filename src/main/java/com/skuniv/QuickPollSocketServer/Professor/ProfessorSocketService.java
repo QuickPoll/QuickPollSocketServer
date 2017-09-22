@@ -1,11 +1,14 @@
 package com.skuniv.QuickPollSocketServer.Professor;
 
+import java.io.IOException;
 import java.util.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.skuniv.QuickPollSocketServer.LectureMember;
 import com.skuniv.QuickPollSocketServer.LectureModel;
 import com.skuniv.QuickPollSocketServer.MessageVO;
@@ -33,14 +36,18 @@ public class ProfessorSocketService {
 			System.out.println("name : " + map.get(sessionKey).getName() + " id : " + map.get(sessionKey).getId());
 		}
 	}
-	public void sendAllDirectQuestionToStudent(MessageVO messageVO) {
+	public void sendAllDirectQuestionToStudent(MessageVO messageVO) throws IOException {
 		HashMap<WebSocketSession, LectureMember> map = lectureModel.getLectureMap(messageVO);
 		Iterator<WebSocketSession> key = map.keySet().iterator();
+		String sendData = toJson(messageVO);
 		key.next(); // not student -> professor (index = 0)
 		while (key.hasNext()) {
 			WebSocketSession sessionKey = key.next();
-//			sessionKey.sendMessage(new TextMessage);
-			System.out.println("name : " + map.get(sessionKey).getName() + " id : " + map.get(sessionKey).getId());
+			sessionKey.sendMessage(new TextMessage(sendData));
 		}
+	}
+	public String toJson(MessageVO messageVO) {
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+		return gson.toJson(messageVO);
 	}
 }
