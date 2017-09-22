@@ -20,13 +20,8 @@ public class EchoHandler extends TextWebSocketHandler {
 	private ProfessorSocketService professorSocketService;
 	@Resource(name = "StudentSocketService")
 	private StudentSocketService studentSocketService;
-	// ������ �������� �ؽ�Ʈ �޽����� �����Ǹ� ȣ��Ǵ� �޼ҵ�
-	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-	 /**
-	
-     * Ŭ���̾�Ʈ ���� ���Ŀ� ����Ǵ� �޼ҵ�
 
-     */
+	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 
     @Override
 
@@ -35,16 +30,12 @@ public class EchoHandler extends TextWebSocketHandler {
             throws Exception {
     	
 //        sessionList.add(session);
-//        System.out.println("{} ����� " + session.getId() );
+//        System.out.println("{} connect " + session.getId() );
 
 
     }
 
-    /**
 
-     * Ŭ���̾�Ʈ�� �����ϼ����� �޽����� �������� �� ����Ǵ� �޼ҵ�
-
-     */
 
     @Override
 
@@ -61,6 +52,9 @@ public class EchoHandler extends TextWebSocketHandler {
     		sess.sendMessage(new TextMessage(json));
     		System.out.println("connect");
     	} else if (messageVO.getType().equals("sendDirectQuestion")) {
+    		// insert db 
+    		
+    		// sendall to student
     		
     	}
     	professorSocketService.printMemberList(messageVO);
@@ -75,19 +69,14 @@ public class EchoHandler extends TextWebSocketHandler {
 
     }
 
-    /**
-
-     * Ŭ���̾�Ʈ�� ������ ������ �� ����Ǵ� �޼ҵ�
-
-     */
 
     @Override
     
 
     public void afterConnectionClosed(WebSocketSession session,
             CloseStatus status) throws Exception {
-    	System.out.println("{} ���� ����" + session.getId());
-
+    	System.out.println(" disconnect : " + session.getId());
+    	
 //        sessionList.remove(session);
 //    	Collection<LinkedList<HashMap<String, Object>>> collection = list.values();    	
 //    	Iterator<LinkedList<HashMap<String, Object>>> iterator = collection.iterator();

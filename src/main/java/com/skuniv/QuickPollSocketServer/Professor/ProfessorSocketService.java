@@ -33,4 +33,14 @@ public class ProfessorSocketService {
 			System.out.println("name : " + map.get(sessionKey).getName() + " id : " + map.get(sessionKey).getId());
 		}
 	}
+	public void sendAllDirectQuestionToStudent(MessageVO messageVO) {
+		HashMap<WebSocketSession, LectureMember> map = lectureModel.getLectureMap(messageVO);
+		Iterator<WebSocketSession> key = map.keySet().iterator();
+		key.next(); // not student -> professor (index = 0)
+		while (key.hasNext()) {
+			WebSocketSession sessionKey = key.next();
+//			sessionKey.sendMessage(new TextMessage);
+			System.out.println("name : " + map.get(sessionKey).getName() + " id : " + map.get(sessionKey).getId());
+		}
+	}
 }
