@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="quickpoll">
+	
+	<select id="selectProfessorPassword" resultType="String" parameterType="Integer">
+		<![CDATA[
+			SELECT
+			    password
+			FROM
+			    professor
+			WHERE
+				professor_id = #{professor_id}
+		]]>
+	</select>
+	<insert id="insertQuickPollQuestion" parameterType="hashmap">
+		<![CDATA[
+			INSERT 
+				INTO quickpollquestion(
+			    	course_id,
+			    	question_content,
+			    	question_type,
+			    	question_answer,
+			    	question_answer_percent,
+			    	question_date
+			    	)
+				VALUES(
+					#{course_id},
+		    		#{question_content},
+		    		#{question_type},
+		    		#{question_answer},
+		    		#{question_answer_percent},
+		    		#{question_date}
+			    )
+		]]>
+	</insert>
+</mapper>
