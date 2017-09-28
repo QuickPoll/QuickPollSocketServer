@@ -37,8 +37,6 @@ public class EchoHandler extends TextWebSocketHandler {
 
     }
 
-
-
     @Override
 
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -57,11 +55,10 @@ public class EchoHandler extends TextWebSocketHandler {
     		System.out.println("connect");
     	} else if (type.equals("sendDirectQuestion")) {
     		// insert db 
-//    		quickPollService.insertQuickPollQuestion(messageVO);
+    		quickPollService.insertQuickPollQuestion(messageVO);
     		System.out.println("directQuestion");
     		// sendall to student
     		professorSocketService.sendAllDirectQuestionToStudent(messageVO);
-    		System.out.println("???");
     	} else if (type.equals("directQuestionAnswer")) {
     		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);
     	}
