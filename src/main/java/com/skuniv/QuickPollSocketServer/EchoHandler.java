@@ -14,13 +14,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.skuniv.QuickPollSocketServer.Professor.ProfessorSocketService;
 import com.skuniv.QuickPollSocketServer.Student.StudentSocketService;
+import com.skuniv.QuickPollSocketServer.dbservice.QuickPollService;
 
 public class EchoHandler extends TextWebSocketHandler {
 	@Resource(name = "ProfessorSocketService")
 	private ProfessorSocketService professorSocketService;
 	@Resource(name = "StudentSocketService")
 	private StudentSocketService studentSocketService;
-
+	@Resource(name = "QuickPollService")
+	private QuickPollService quickPollService;
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 
     @Override
@@ -55,9 +57,11 @@ public class EchoHandler extends TextWebSocketHandler {
     		System.out.println("connect");
     	} else if (type.equals("sendDirectQuestion")) {
     		// insert db 
+//    		quickPollService.insertQuickPollQuestion(messageVO);
     		System.out.println("directQuestion");
     		// sendall to student
     		professorSocketService.sendAllDirectQuestionToStudent(messageVO);
+    		System.out.println("???");
     	} else if (type.equals("directQuestionAnswer")) {
     		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);
     	}
