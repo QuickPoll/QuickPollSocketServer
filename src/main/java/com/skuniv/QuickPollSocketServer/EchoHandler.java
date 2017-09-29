@@ -54,9 +54,10 @@ public class EchoHandler extends TextWebSocketHandler {
     		sess.sendMessage(new TextMessage(json));
     		System.out.println("connect");
     	} else if (type.equals("sendDirectQuestion")) {
-    		// insert db 
-    		quickPollService.insertQuickPollQuestion(messageVO);
     		System.out.println("directQuestion");
+    		// insert db 
+    		int key = quickPollService.insertQuickPollQuestion(messageVO);
+    		System.out.println("key : " + key);
     		// sendall to student
     		professorSocketService.sendAllDirectQuestionToStudent(messageVO);
     	} else if (type.equals("directQuestionAnswer")) {
