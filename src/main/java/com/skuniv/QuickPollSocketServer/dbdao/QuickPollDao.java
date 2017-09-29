@@ -11,7 +11,7 @@ import com.skuniv.QuickPollSocketServer.connectdb.ConnectDB;
 public class QuickPollDao extends ConnectDB {
 	
 
-	public void insertQuickPollQuestion(Map<String, Object> map) {
-		insert("quickpoll.insertQuickPollQuestion", map);
+	public int insertQuickPollQuestion(Map<String, Object> map) {
+		return (Integer)insert("quickpoll.insertQuickPollQuestion", map);
 	}
 }

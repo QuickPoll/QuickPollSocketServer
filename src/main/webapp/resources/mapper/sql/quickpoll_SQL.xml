@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="quickpoll">
-	
-	<select id="selectProfessorPassword" resultType="String" parameterType="Integer">
+
+	<select id="selectProfessorPassword" resultType="String"
+		parameterType="Integer">
 		<![CDATA[
 			SELECT
 			    password
@@ -13,8 +14,13 @@
 				professor_id = #{professor_id}
 		]]>
 	</select>
-	<insert id="insertQuickPollQuestion" parameterType="hashmap">
+	<insert id="insertQuickPollQuestion" useGeneratedKeys="true" parameterType="hashmap">
+		<selectKey keyProperty="quickpoll_question_id" resultType="int" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+
 		<![CDATA[
+		
 			INSERT 
 				INTO quickpollquestion(
 			    	course_id,
