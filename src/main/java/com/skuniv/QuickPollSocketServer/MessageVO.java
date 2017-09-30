@@ -3,12 +3,31 @@ package com.skuniv.QuickPollSocketServer;
 import com.google.gson.Gson;
 
 public class MessageVO {
+	private int quickpoll_question_id;
 	private String course_id;
 	private String message;
+	private int id;
+	/******* message type ********/
+	private String type; 
+	/*
+	 "connect" : "enter to student"
+	 "create" : "create to room from professor"
+	 
+	 */
+	/*****************************/
+
 	private int question_type; // 1->direct(subjective) 2-> objective 3->subjective
 	private String question_content;
 	private String name;
 	private String question_anwser;
+	
+	public int getQuickpollQuestionId() {
+		return quickpoll_question_id;
+	}
+
+	public void setQuickpollQuestionId(int quickpoll_question_id) {
+		this.quickpoll_question_id = quickpoll_question_id;
+	}
 	public String getQuestionAnwser() {
 		return question_anwser;
 	}
@@ -40,18 +59,6 @@ public class MessageVO {
 	public void setQuestion_content(String question_content) {
 		this.question_content = question_content;
 	}
-
-
-
-	/******* message type ********/
-	private String type; 
-	/*
-	 "connect" : "enter to student"
-	 "create" : "create to room from professor"
-	 
-	 */
-	/*****************************/
-	private int id;
 	
 	public String getCourse_id() {
 		return course_id;
