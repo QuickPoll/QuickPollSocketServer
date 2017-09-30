@@ -57,13 +57,14 @@ public class EchoHandler extends TextWebSocketHandler {
     		System.out.println("directQuestion");
     		// insert db 
     		int key = quickPollService.insertQuickPollQuestion(messageVO);
-    		System.out.println("key : " + key);
+    		messageVO.setQuickpollQuestionId(key);
     		// sendall to student
     		professorSocketService.sendAllDirectQuestionToStudent(messageVO);
     	} else if (type.equals("directQuestionAnswer")) {
+    		quickPollService.insertQuickPollAnwser(messageVO);
     		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);
     	}
-    	professorSocketService.printMemberList(messageVO);
+//    	professorSocketService.printMemberList(messageVO);
 //    	System.out.println("{}�� ���� {} ����" + session.getId() + ", "+ message.getPayload());
 //
 //        for(WebSocketSession sess : sessionList){

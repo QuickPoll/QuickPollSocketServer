@@ -15,10 +15,6 @@
 		]]>
 	</select>
 	<insert id="insertQuickPollQuestion" useGeneratedKeys="true" parameterType="hashmap">
-		<selectKey keyProperty="quickpoll_question_id" resultType="int" order="AFTER">
-			SELECT last_insert_id()
-		</selectKey>
-
 		<![CDATA[
 		
 			INSERT 
@@ -38,6 +34,27 @@
 		    		#{question_answer_percent},
 		    		#{question_date}
 			    )
+			    
+		]]>
+		<selectKey keyProperty="quickpoll_question_id" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<insert id="insertQuickPollAnswer" parameterType="hashmap">
+		<![CDATA[
+			INSERT 
+				INTO quickpollanswer(
+			    	quickpoll_question_id,
+			    	student_id,
+			    	question_answer
+			    )
+				VALUES(
+					#{quickpoll_question_id},
+		    		#{id},
+		    		#{question_answer}
+			    )
+			    
 		]]>
 	</insert>
+	
 </mapper>

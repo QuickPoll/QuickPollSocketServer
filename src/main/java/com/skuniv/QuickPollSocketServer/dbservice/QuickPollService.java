@@ -22,7 +22,7 @@ public class QuickPollService {
 	
 	public int insertQuickPollQuestion(MessageVO messageVO)  throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(messageVO.getCourse_id()+", " + messageVO.getQuestion_content() + " , " + messageVO.getQuestion_type() + " , "+ today());
+		map.put("quickpoll_question_id", 0);
 		map.put("course_id", messageVO.getCourse_id());
 		map.put("question_content", messageVO.getQuestion_content());
 		map.put("question_type", messageVO.getQuestion_type());
@@ -30,6 +30,13 @@ public class QuickPollService {
 		map.put("question_answer_percent", null);
 		map.put("question_date", today());
 		return quickPollDao.insertQuickPollQuestion(map);
+	}
+	public void insertQuickPollAnwser(MessageVO messageVO) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("quickpoll_question_id", messageVO.getQuickpollQuestionId());
+		map.put("id", messageVO.getId());
+		map.put("question_answer", messageVO.getQuestionAnwser());
+		quickPollDao.insertQuickPollAnswer(map);
 	}
 	public String today() {
 		Date date = new Date();
