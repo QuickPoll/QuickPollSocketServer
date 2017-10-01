@@ -14,13 +14,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.skuniv.QuickPollSocketServer.Professor.ProfessorSocketService;
 import com.skuniv.QuickPollSocketServer.Student.StudentSocketService;
+import com.skuniv.QuickPollSocketServer.dbservice.QuickPollService;
 
 public class EchoHandler extends TextWebSocketHandler {
 	@Resource(name = "ProfessorSocketService")
 	private ProfessorSocketService professorSocketService;
 	@Resource(name = "StudentSocketService")
 	private StudentSocketService studentSocketService;
-
+	@Resource(name = "QuickPollService")
+	private QuickPollService quickPollService;
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 
     @Override
@@ -34,8 +36,6 @@ public class EchoHandler extends TextWebSocketHandler {
 
 
     }
-
-
 
     @Override
 
@@ -54,14 +54,17 @@ public class EchoHandler extends TextWebSocketHandler {
     		sess.sendMessage(new TextMessage(json));
     		System.out.println("connect");
     	} else if (type.equals("sendDirectQuestion")) {
-    		// insert db 
     		System.out.println("directQuestion");
+    		// insert db 
+    		int key = quickPollService.insertQuickPollQuestion(messageVO);
+    		messageVO.setQuickpollQuestionId(key);
     		// sendall to student
     		professorSocketService.sendAllDirectQuestionToStudent(messageVO);
     	} else if (type.equals("directQuestionAnswer")) {
+    		quickPollService.insertQuickPollAnwser(messageVO);
     		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);
     	}
-    	professorSocketService.printMemberList(messageVO);
+//    	professorSocketService.printMemberList(messageVO);
 //    	System.out.println("{}�� ���� {} ����" + session.getId() + ", "+ message.getPayload());
 //
 //        for(WebSocketSession sess : sessionList){
