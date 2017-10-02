@@ -53,13 +53,13 @@ public class EchoHandler extends TextWebSocketHandler {
     		final String json = gson.toJson(messageVO);
     		sess.sendMessage(new TextMessage(json));
     		System.out.println("connect");
-    	} else if (type.equals("sendDirectQuestion")) {
-    		System.out.println("directQuestion");
+    	} else if (type.equals("sendDirectQuestion") || type.equals("sendObjectiveQuestion")) {
+    		System.out.println("sendQuestion");
     		// insert db 
     		int key = quickPollService.insertQuickPollQuestion(messageVO);
     		messageVO.setQuickpollQuestionId(key);
     		// sendall to student
-    		professorSocketService.sendAllDirectQuestionToStudent(messageVO);
+    		professorSocketService.sendAllQuestionToStudent(messageVO);
     	} else if (type.equals("directQuestionAnswer")) {
     		quickPollService.insertQuickPollAnwser(messageVO);
     		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);

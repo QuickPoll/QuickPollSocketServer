@@ -20,7 +20,40 @@ public class MessageVO {
 	private String question_content;
 	private String name;
 	private String question_anwser;
+	private String example1, example2, example3, example4;
 	
+	public String getExample1() {
+		return example1;
+	}
+
+	public void setExample1(String example1) {
+		this.example1 = example1;
+	}
+
+	public String getExample2() {
+		return example2;
+	}
+
+	public void setExample2(String example2) {
+		this.example2 = example2;
+	}
+
+	public String getExample3() {
+		return example3;
+	}
+
+	public void setExample3(String example3) {
+		this.example3 = example3;
+	}
+
+	public String getExample4() {
+		return example4;
+	}
+
+	public void setExample4(String example4) {
+		this.example4 = example4;
+	}
+
 	public int getQuickpollQuestionId() {
 		return quickpoll_question_id;
 	}
