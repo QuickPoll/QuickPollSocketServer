@@ -20,17 +20,6 @@ public class QuickPollService {
 		return "quickpoll";
 	}
 	
-	public int insertQuickPollQuestion(MessageVO messageVO)  throws Exception{
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("quickpoll_question_id", 0);
-		map.put("course_id", messageVO.getCourse_id());
-		map.put("question_content", messageVO.getQuestion_content());
-		map.put("question_type", messageVO.getQuestion_type());
-		map.put("question_answer", null);
-		map.put("question_answer_percent", null);
-		map.put("question_date", today());
-		return quickPollDao.insertQuickPollQuestion(map);
-	}
 	public void insertQuickPollAnwser(MessageVO messageVO) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("quickpoll_question_id", messageVO.getQuickpollQuestionId());
@@ -38,6 +27,19 @@ public class QuickPollService {
 		map.put("question_answer", messageVO.getQuestionAnwser());
 		quickPollDao.insertQuickPollAnswer(map);
 	}
+	
+	public int insertQuickPollQuestion(MessageVO messageVO)  throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("course_id", messageVO.getCourse_id());
+		map.put("question_content", messageVO.getQuestion_content());
+		map.put("question_type", messageVO.getQuestion_type());
+		map.put("question_answer", null);
+		map.put("question_answer_percent", null);
+		map.put("question_date", today());
+		map.put("question_objective", messageVO.getExample1()+"[token]"+messageVO.getExample2()+"[token]"+messageVO.getExample3()+"[token]"+messageVO.getExample4());
+		return quickPollDao.insertQuickPollQuestion(map);
+	}
+	
 	public String today() {
 		Date date = new Date();
 		String today_date = "";
@@ -49,8 +51,8 @@ public class QuickPollService {
 		today_date = "" + year + ". ";
 		today_date += month / 10 > 0 ? "" + month + ". " : "0" + month + ". ";
 		today_date += day / 10 > 0 ? "" + day + ". " : "0" + day + ". ";
-//		today_date += hours / 10 > 0 ? "" + hours + "½Ã " : "0" + hours + "½Ã ";
-//		today_date += minutes / 10 > 0 ? "" + minutes + "ºÐ" : "0" + minutes + "ºÐ";
+//		today_date += hours / 10 > 0 ? "" + hours + "ï¿½ï¿½ " : "0" + hours + "ï¿½ï¿½ ";
+//		today_date += minutes / 10 > 0 ? "" + minutes + "ï¿½ï¿½" : "0" + minutes + "ï¿½ï¿½";
 		return today_date;
 	}
 }

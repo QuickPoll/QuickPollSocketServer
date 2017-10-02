@@ -41,6 +41,7 @@ public class StudentSocketService {
 		WebSocketSession sessionKey = key.next();
 		sessionKey.sendMessage(new TextMessage(sendData));
 	}
+	
 	public String toJson(MessageVO messageVO) {
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 		return gson.toJson(messageVO);

@@ -36,7 +36,7 @@ public class ProfessorSocketService {
 			System.out.println("name : " + map.get(sessionKey).getName() + " id : " + map.get(sessionKey).getId());
 		}
 	}
-	public void sendAllDirectQuestionToStudent(MessageVO messageVO) throws IOException {
+	public void sendAllQuestionToStudent(MessageVO messageVO) throws IOException {
 		HashMap<WebSocketSession, LectureMember> map = lectureModel.getLectureMap(messageVO);
 		Iterator<WebSocketSession> key = map.keySet().iterator();
 		String sendData = toJson(messageVO);
@@ -46,6 +46,7 @@ public class ProfessorSocketService {
 			sessionKey.sendMessage(new TextMessage(sendData));
 		}
 	}
+	
 	public String toJson(MessageVO messageVO) {
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 		return gson.toJson(messageVO);
