@@ -56,10 +56,10 @@ public class EchoHandler extends TextWebSocketHandler {
     	} else if (type.equals("sendDirectQuestion") || type.equals("sendObjectiveQuestion")) {
     		System.out.println("sendQuestion");
     		// insert db 
-    		int key = quickPollService.insertQuickPollQuestion(messageVO);
-    		messageVO.setQuickpollQuestionId(key);
-    		// sendall to student
-    		professorSocketService.sendAllQuestionToStudent(messageVO);
+//    		int key = quickPollService.insertQuickPollQuestion(messageVO);
+//    		messageVO.setQuickpollQuestionId(key);
+//    		// sendall to student
+//    		professorSocketService.sendAllQuestionToStudent(messageVO);
     	} else if (type.equals("directQuestionAnswer")) {
     		quickPollService.insertQuickPollAnwser(messageVO);
     		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);
