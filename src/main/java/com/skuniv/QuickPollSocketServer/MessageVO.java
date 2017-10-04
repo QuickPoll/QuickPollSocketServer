@@ -19,9 +19,18 @@ public class MessageVO {
 	private int question_type; // 1->direct(subjective) 2-> objective 3->subjective
 	private String question_content;
 	private String name;
-	private String question_anwser;
+	private String question_answer;
 	private String example1, example2, example3, example4;
+	private int summitedCount;
 	
+	public int getSummitedCount() {
+		return summitedCount;
+	}
+
+	public void setSummitedCount(int summitedCount) {
+		this.summitedCount = summitedCount;
+	}
+
 	public String getExample1() {
 		return example1;
 	}
@@ -62,11 +71,11 @@ public class MessageVO {
 		this.quickpoll_question_id = quickpoll_question_id;
 	}
 	public String getQuestionAnwser() {
-		return question_anwser;
+		return question_answer;
 	}
 
 	public void setQuestionAnwser(String question_anwser) {
-		this.question_anwser = question_anwser;
+		this.question_answer = question_anwser;
 	}
 
 	public String getName() {

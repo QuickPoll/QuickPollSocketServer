@@ -20,4 +20,7 @@ public class QuickPollDao extends ConnectDB {
 		
 		insert("quickpoll.insertQuickPollAnswer", map);
 	}
+	public int selectCountQuickPollAnswer(int quickpoll_question_id) {
+		return (Integer)selectOne("quickpoll.selectCountQuickPollAnswer", quickpoll_question_id);
+	}
 }
