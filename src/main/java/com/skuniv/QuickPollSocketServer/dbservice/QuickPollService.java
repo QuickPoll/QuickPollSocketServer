@@ -19,9 +19,12 @@ public class QuickPollService {
 		// TODO Auto-generated method stub
 		return "quickpoll";
 	}
-	
+	public int selectCountQuickPollAnswer(int quickpoll_question_id) throws Exception {
+		return quickPollDao.selectCountQuickPollAnswer(quickpoll_question_id);
+	}
 	public void insertQuickPollAnwser(MessageVO messageVO) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(messageVO.getQuickpollQuestionId()+", " + messageVO.getId() + ", " + messageVO.getQuestionAnwser());
 		map.put("quickpoll_question_id", messageVO.getQuickpollQuestionId());
 		map.put("id", messageVO.getId());
 		map.put("question_answer", messageVO.getQuestionAnwser());

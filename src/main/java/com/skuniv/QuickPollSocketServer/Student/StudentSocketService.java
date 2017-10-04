@@ -41,7 +41,14 @@ public class StudentSocketService {
 		WebSocketSession sessionKey = key.next();
 		sessionKey.sendMessage(new TextMessage(sendData));
 	}
-	
+	public void sendSummitedObjectiveQuestionToProfessor(MessageVO messageVO, int count) throws IOException {
+		messageVO.setSummitedCount(count);
+		HashMap<WebSocketSession, LectureMember> map = lectureModel.getLectureMap(messageVO);
+		Iterator<WebSocketSession> key = map.keySet().iterator();
+		String sendData = toJson(messageVO);
+		WebSocketSession sessionKey = key.next();
+		sessionKey.sendMessage(new TextMessage(sendData));
+	}
 	public String toJson(MessageVO messageVO) {
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 		return gson.toJson(messageVO);

@@ -14,6 +14,17 @@
 				professor_id = #{professor_id}
 		]]>
 	</select>
+	<select id="selectCountQuickPollAnswer" resultType="Integer"
+		parameterType="Integer">
+		<![CDATA[
+			SELECT
+			    count(quickpoll_question_id)
+			FROM
+			    quickpollanswer
+			WHERE
+				quickpoll_question_id = #{quickpoll_question_id}
+		]]>
+	</select>
 	<insert id="insertQuickPollQuestion" useGeneratedKeys="true" parameterType="hashmap">
 		<![CDATA[
 		
