@@ -40,7 +40,7 @@ public class ProfessorSocketService {
 		HashMap<WebSocketSession, LectureMember> map = lectureModel.getLectureMap(messageVO);
 		Iterator<WebSocketSession> key = map.keySet().iterator();
 		String sendData = toJson(messageVO);
-		key.next(); // not student -> professor (index = 0)
+		//key.next(); // not student -> professor (index = 0)
 		while (key.hasNext()) {
 			WebSocketSession sessionKey = key.next();
 			sessionKey.sendMessage(new TextMessage(sendData));
