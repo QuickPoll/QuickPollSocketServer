@@ -36,7 +36,7 @@ public class QuickPollService {
 		map.put("course_id", messageVO.getCourse_id());
 		map.put("question_content", messageVO.getQuestion_content());
 		map.put("question_type", messageVO.getQuestion_type());
-		map.put("question_answer", null);
+		map.put("question_answer", messageVO.getQuestionAnwser());
 		map.put("question_answer_percent", null);
 		map.put("question_date", today());
 		map.put("question_objective", messageVO.getExample1()+"[token]"+messageVO.getExample2()+"[token]"+messageVO.getExample3()+"[token]"+messageVO.getExample4());
