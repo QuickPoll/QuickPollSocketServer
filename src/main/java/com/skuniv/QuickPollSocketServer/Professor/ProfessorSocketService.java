@@ -38,6 +38,8 @@ public class ProfessorSocketService {
 	}
 	public void sendAllQuestionToStudent(MessageVO messageVO) throws IOException {
 		HashMap<WebSocketSession, LectureMember> map = lectureModel.getLectureMap(messageVO);
+		messageVO.setConnectedPeople(map.size()-1);
+		System.out.println("size : " + (map.size()-1));
 		Iterator<WebSocketSession> key = map.keySet().iterator();
 		String sendData = toJson(messageVO);
 		//key.next(); // not student -> professor (index = 0)

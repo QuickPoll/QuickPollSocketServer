@@ -22,7 +22,15 @@ public class MessageVO {
 	private String question_answer;
 	private String example1, example2, example3, example4;
 	private int summitedCount;
-	
+	private int connectedPeople;
+	public int getConnectedPeople() {
+		return connectedPeople;
+	}
+
+	public void setConnectedPeople(int connectedPeople) {
+		this.connectedPeople = connectedPeople;
+	}
+
 	public int getSummitedCount() {
 		return summitedCount;
 	}
