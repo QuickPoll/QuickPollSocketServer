@@ -53,7 +53,7 @@ public class EchoHandler extends TextWebSocketHandler {
     		final String json = gson.toJson(messageVO);
     		sess.sendMessage(new TextMessage(json));
     		System.out.println("connect");
-    	} else if (type.equals("sendDirectQuestion") || type.equals("sendObjectiveQuestion")) {
+    	} else if (type.equals("sendDirectQuestion") || type.equals("sendObjectiveQuestion") || type.equals("sendSubjectiveQuestion")) {
     		System.out.println("sendQuestion");
     		// insert db 
     		int key = quickPollService.insertQuickPollQuestion(messageVO);
@@ -63,7 +63,7 @@ public class EchoHandler extends TextWebSocketHandler {
     	} else if (type.equals("directQuestionAnswer")) {
     		quickPollService.insertQuickPollAnwser(messageVO);
     		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);
-    	} else if (type.equals("objectiveQuestionAnswer")) {
+    	} else if (type.equals("objectiveQuestionAnswer") || type.equals("subjectiveQuestionAnswer")) {
     		System.out.println("objectiveQuestionAnswer");
     		quickPollService.insertQuickPollAnwser(messageVO);
     		int count = quickPollService.selectCountQuickPollAnswer(messageVO.getQuickpollQuestionId());
