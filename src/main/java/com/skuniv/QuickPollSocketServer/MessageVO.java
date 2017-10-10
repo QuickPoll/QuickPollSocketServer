@@ -15,7 +15,7 @@ public class MessageVO {
 	 
 	 */
 	/*****************************/
-
+	private int questionId;
 	private int question_type; // 1->direct(subjective) 2-> objective 3->subjective
 	private String question_content;
 	private String name;
@@ -25,6 +25,14 @@ public class MessageVO {
 	private int connectedPeople;
 	public int getConnectedPeople() {
 		return connectedPeople;
+	}
+
+	public int getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
 	}
 
 	public void setConnectedPeople(int connectedPeople) {

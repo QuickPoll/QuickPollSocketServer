@@ -29,21 +29,21 @@
 		<![CDATA[
 		
 			INSERT 
-				INTO quickpollquestion(
+				INTO QuickPollQuestion(
 			    	course_id,
-			    	question_content,
+			    	question_id,
 			    	question_type,
-			    	question_answer,
 			    	question_answer_percent,
-			    	question_date
+			    	question_date,
+			    	question_content
 			    	)
 				VALUES(
 					#{course_id},
-		    		#{question_content},
+		    		#{question_id},
 		    		#{question_type},
-		    		#{question_answer},
 		    		#{question_answer_percent},
-		    		#{question_date}
+		    		#{question_date},
+		    		#{question_content}
 			    )
 			    
 		]]>
