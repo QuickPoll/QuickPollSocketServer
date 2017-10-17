@@ -25,6 +25,28 @@
 				quickpoll_question_id = #{quickpoll_question_id}
 		]]>
 	</select>
+	<select id="selectAnswerForObjectiveQuestion" resultType="Integer"
+		parameterType="Integer">
+		<![CDATA[
+			SELECT
+			    question_answer
+			FROM
+			    QuickPollQuestion
+			WHERE
+				quickpoll_question_id = #{quickpoll_question_id}
+		]]>
+	</select>
+	<select id="selectAnswerForSubjectiveQuestion" resultType="String"
+		parameterType="Integer">
+		<![CDATA[
+			SELECT
+			    question_answer
+			FROM
+			    QuickPollQuestion
+			WHERE
+				quickpoll_question_id = #{quickpoll_question_id}
+		]]>
+	</select>
 	<insert id="insertQuickPollQuestion" useGeneratedKeys="true" parameterType="hashmap">
 		<![CDATA[
 		
@@ -35,7 +57,8 @@
 			    	question_type,
 			    	question_answer_percent,
 			    	question_date,
-			    	question_content
+			    	question_content,
+			    	question_answer
 			    	)
 				VALUES(
 					#{course_id},
@@ -43,7 +66,8 @@
 		    		#{question_type},
 		    		#{question_answer_percent},
 		    		#{question_date},
-		    		#{question_content}
+		    		#{question_content},
+		    		#{question_answer}
 			    )
 			    
 		]]>
@@ -57,12 +81,14 @@
 				INTO quickpollanswer(
 			    	quickpoll_question_id,
 			    	student_id,
-			    	question_answer
+			    	question_answer,
+			    	answer_state
 			    )
 				VALUES(
 					#{quickpoll_question_id},
 		    		#{id},
-		    		#{question_answer}
+		    		#{question_answer},
+		    		#{answer_state}
 			    )
 			    
 		]]>

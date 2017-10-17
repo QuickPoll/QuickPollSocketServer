@@ -23,4 +23,10 @@ public class QuickPollDao extends ConnectDB {
 	public int selectCountQuickPollAnswer(int quickpoll_question_id) {
 		return (Integer)selectOne("quickpoll.selectCountQuickPollAnswer", quickpoll_question_id);
 	}
+	public int selectAnswerForObjectiveQuestion(int quickpoll_question_id) {
+		return (Integer)selectOne("quickpoll.selectAnswerForObjectiveQuestion", quickpoll_question_id);
+	}
+	public String selectAnswerForSubjectiveQuestion(int quickpoll_question_id) {
+		return (String)selectOne("quickpoll.selectAnswerForSubjectiveQuestion", quickpoll_question_id);
+	}
 }
