@@ -1,6 +1,7 @@
 package com.skuniv.QuickPollSocketServer;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.skuniv.QuickPollSocketServer.Professor.ProfessorSocketService;
 import com.skuniv.QuickPollSocketServer.Student.StudentSocketService;
+import com.skuniv.QuickPollSocketServer.dbservice.ConnectService;
 import com.skuniv.QuickPollSocketServer.dbservice.QuickPollService;
 
 public class EchoHandler extends TextWebSocketHandler {
@@ -23,6 +25,8 @@ public class EchoHandler extends TextWebSocketHandler {
 	private StudentSocketService studentSocketService;
 	@Resource(name = "QuickPollService")
 	private QuickPollService quickPollService;
+	@Resource(name = "ConnectService")
+	private ConnectService connectService;
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 
     @Override
@@ -47,7 +51,8 @@ public class EchoHandler extends TextWebSocketHandler {
     		professorSocketService.createLecture(session, message, messageVO);
     		System.out.println("create");
     	} else if (type.equals("connect")) {
-    		studentSocketService.enterLecture(session, message, messageVO);
+    		boolean state = studentSocketService.enterLecture(session, message, messageVO);
+    		
     		WebSocketSession sess = professorSocketService.sendConnectStudent(messageVO.getCourse_id());
     		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
     		final String json = gson.toJson(messageVO);
@@ -88,7 +93,7 @@ public class EchoHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session,
             CloseStatus status) throws Exception {
     	System.out.println(" disconnect : " + session.getId());
-    	
+    	connectService.disConnect(session);
 //        sessionList.remove(session);
 //    	Collection<LinkedList<HashMap<String, Object>>> collection = list.values();    	
 //    	Iterator<LinkedList<HashMap<String, Object>>> iterator = collection.iterator();
