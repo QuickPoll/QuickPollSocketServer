@@ -30,7 +30,6 @@ public class EchoHandler extends TextWebSocketHandler {
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 
     @Override
-
     public void afterConnectionEstablished(WebSocketSession session)
 
             throws Exception {
@@ -42,7 +41,6 @@ public class EchoHandler extends TextWebSocketHandler {
     }
 
     @Override
-
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
     	
     	MessageVO messageVO = MessageVO.converMessage(message.getPayload());
@@ -68,9 +66,11 @@ public class EchoHandler extends TextWebSocketHandler {
     	} else if (type.equals("directQuestionAnswer")) {
     		quickPollService.insertQuickPollAnwser(messageVO);
     		studentSocketService.sendDirectQuestionAnwserToProfessor(messageVO);
+    		connectService.closeConnect(session, messageVO.getCourse_id());
     	} else if (type.equals("objectiveQuestionAnswer") || type.equals("subjectiveQuestionAnswer")) {
     		System.out.println("objectiveQuestionAnswer");
     		quickPollService.insertQuickPollAnwser(messageVO);
+    		connectService.closeConnect(session, messageVO.getCourse_id());
     		int count = quickPollService.selectCountQuickPollAnswer(messageVO.getQuickpollQuestionId());
     		studentSocketService.sendSummitedObjectiveQuestionToProfessor(messageVO, count);
     	}
@@ -88,12 +88,11 @@ public class EchoHandler extends TextWebSocketHandler {
 
 
     @Override
-    
-
     public void afterConnectionClosed(WebSocketSession session,
             CloseStatus status) throws Exception {
     	System.out.println(" disconnect : " + session.getId());
     	connectService.disConnect(session);
+    	
 //        sessionList.remove(session);
 //    	Collection<LinkedList<HashMap<String, Object>>> collection = list.values();    	
 //    	Iterator<LinkedList<HashMap<String, Object>>> iterator = collection.iterator();
